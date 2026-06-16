@@ -1,0 +1,42 @@
+@startuml Diagrama Estado Cliente
+
+skinparam state {
+  BackgroundColor #F5EEF8
+  StartColor Purple
+  EndColor Indigo
+  BorderColor MediumPurple
+}
+
+title Estados de un Cliente
+
+[*] --> SinDeuda : crear()
+
+SinDeuda : - saldo_deudor = 0
+SinDeuda : - No requiere seguimiento
+
+SinDeuda --> ConDeuda : incrementarSaldo(monto)\n[monto > 0]\n/ sumarSaldo
+
+ConDeuda : - saldo_deudor > 0
+ConDeuda : - Habilitado para recibir abonos
+
+state EvaluarAbono <<choice>>
+
+ConDeuda --> EvaluarAbono : decrementarSaldo(monto)
+
+EvaluarAbono --> ConDeuda : [monto < saldo_deudor]\n/ restarSaldo(monto)
+EvaluarAbono --> SinDeuda : [monto >= saldo_deudor]\n/ saldo_deudor = 0
+
+note left of SinDeuda
+  Estado inicial por defecto
+  cuando un cliente es
+  creado en el sistema.
+end note
+
+note right of EvaluarAbono
+  Si el monto excede la deuda,
+  el Controlador pide confirmación
+  antes de llevar el saldo
+  a cero.
+end note
+
+@enduml

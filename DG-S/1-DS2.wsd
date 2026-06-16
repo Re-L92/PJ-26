@@ -1,0 +1,41 @@
+@startuml Sec-01b
+title Gestionar Deudores – Flujo alternativo: Editar Cliente
+
+autonumber "<b>[00]</b>"
+
+actor "Dueña" as D
+boundary "InterfazCliente" as IC
+control "ControladorCliente" as CC
+database "BaseDatos" as BD
+
+D -> IC: seleccionarCliente(idCliente)
+activate IC
+IC -> CC: buscarCliente(idCliente)
+activate CC
+CC -> BD: buscar(idCliente)
+activate BD
+BD --> CC: datosCliente
+deactivate BD
+CC --> IC: datosCliente
+deactivate CC
+IC --> D: mostrarFormularioEdicion(datosCliente)
+
+
+D -> IC: modificarDatos(nombre, telefono)
+
+IC -> CC: actualizarCliente(idCliente, nombre, telefono)
+activate CC
+CC -> BD: validarNombreDuplicado(nombre)
+activate BD
+BD --> CC: nombreDisponible
+deactivate BD
+CC -> BD: editar(nombre, telefono)
+activate BD
+BD --> CC: clienteActualizado
+deactivate BD
+CC --> IC: cambiosGuardados
+deactivate CC
+IC --> D: mostrarConfirmacion()
+deactivate IC
+
+@enduml

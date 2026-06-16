@@ -1,0 +1,32 @@
+@startuml Caso-02
+title Registrar Deuda
+left to right direction
+
+:Usuario:              as U
+:Dueña de la Pulpería: as Dueña
+:Ayudante Autorizado:  as Ayudante
+
+Dueña    --|> U
+Ayudante --|> U
+
+rectangle "Sistema de control de Creditos" {
+
+    (Autenticar Usuario)      as AU
+    (Buscar Cliente)          as BC
+    (Seleccionar Productos)   as SP
+    (Calcular Total)          as CT
+    (Registrar Deuda)         as RD
+    (Validar Límite)          as VL
+    (Gestionar Deudores)      as GD
+
+    RD ..> AU : <<include>>
+    RD ..> BC : <<include>>
+    RD ..> SP : <<include>>
+    SP ..> CT : <<include>>
+    RD ..> VL : <<include>> 
+    GD ..> RD : <<extend>>
+}
+
+U --> RD
+
+@enduml

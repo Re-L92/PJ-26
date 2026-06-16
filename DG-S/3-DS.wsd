@@ -1,0 +1,57 @@
+@startuml Sec-03
+title Registrar Abono
+
+autonumber "<b>[00]</b>"
+
+actor "Usuario" as U
+boundary "InterfazAbono" as IA
+control "ControladorAbono" as CA
+database "BaseDatos" as BD
+
+
+U -> IA: abrirModuloAbono()
+activate IA
+
+U -> IA: buscarCliente(nombre)
+IA -> CA: localizarCliente(nombre)
+activate CA
+CA -> BD: buscarCliente(nombre)
+activate BD
+BD --> CA: datosCliente
+deactivate BD
+CA --> IA: datosCliente
+deactivate CA
+IA --> U: mostrarCliente(saldoDeudor)
+
+U -> IA: ingresarMonto(monto)
+IA -> CA: registrarAbono(idCliente, idUsuario, monto)
+activate CA
+
+alt monto <= saldo deudor
+
+  CA -> BD: actualizarSaldo(monto)
+  activate BD
+  BD --> CA: saldoActualizado
+  deactivate BD
+  CA --> IA: abonoRegistrado
+  IA --> U: mostrarComprobante(saldoNuevo)
+  
+else monto > saldo deudor
+  CA --> IA: mostrarAlertaExcedente()
+  IA --> U: solicitarConfirmacion()
+  
+  U -> IA: confirmar()
+  IA -> CA: confirmarAbonoExcedente(idCliente, monto)
+  
+  CA -> BD: actualizarSaldo(saldoDeudor)
+  activate BD
+  BD --> CA: saldoEnCero
+  deactivate BD
+  
+  CA --> IA: abonoRegistrado
+  deactivate CA
+  IA --> U: mostrarComprobante(saldoNuevo)
+  deactivate IA
+end
+
+@enduml

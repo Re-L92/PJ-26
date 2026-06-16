@@ -1,0 +1,21 @@
+@startuml Caso-01
+title Gestionar Deudores
+left to right direction
+
+:Dueña de la Pulpería: as Dueña
+
+rectangle "Sistema de control de Creditos" {
+
+    (Autenticar Usuario)       as AU
+    (Gestionar Deudores)       as GD
+    (Validar Nombre Duplicado) as VD
+    (Editar Cliente)           as EC
+
+    GD ..> AU : <<include>>
+    GD ..> VD : <<include>>
+    EC ..> GD : <<extend>>
+}
+
+Dueña --> GD
+
+@enduml

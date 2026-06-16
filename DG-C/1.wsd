@@ -1,0 +1,40 @@
+@startuml Caso-01-Clases
+title Gestionar Deudores
+
+skinparam class {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor #444444
+  FontName Helvetica
+}
+skinparam classFontStyle bold
+skinparam stereotypeCBackgroundColor #DDDDDD
+
+class Usuario {
+  -id_usuario : int
+  -nombre : String
+  -contraseña : String
+  +autenticar() 
+}
+
+class Dueña {
+  +gestionarDeudores() 
+}
+
+class Cliente {
+  -id_cliente : int
+  -nombre : String
+  -telefono : String
+  -fecha_registro : Date
+  -saldo_deudor : double
+  - limite_credito: double
+  +registrar()
+  +editar()
+}
+
+Usuario <|-- Dueña
+Dueña "1" --> "0..*" Cliente : gestiona 
+
+
+
+@enduml

@@ -1,0 +1,23 @@
+@startgantt Fase 01
+printscale daily
+saturday are closed
+sunday are closed
+Project starts 2026-05-05
+
+title Fase 1: Análisis y Especificación de Requerimientos
+
+[Entrevistar a la propietaria] as [T1] requires 4 days
+then [Documentar requerimientos funcionales y no funcionales] as [T2] requires 6 days
+then [Especificar los casos de uso] as [T3] requires 6 days
+[Definir factibilidad técnica, operativa, económica y legal] as [T4] starts at 2026-05-19
+[T4] requires 15 days
+
+[T1] is colored in LightBlue
+[T2] is colored in LightBlue
+[T3] is colored in LightBlue
+[T4] is colored in LightBlue
+
+
+[Hito: Requerimientos Aprobados por el Cliente] happens at [T3]'s end
+[Hito: Requerimientos Aprobados por el Cliente] is colored in Red
+@endgantt

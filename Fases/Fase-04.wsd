@@ -1,0 +1,15 @@
+@startgantt Fase 04
+printscale daily
+saturday are closed
+sunday are closed
+Project starts 2026-09-07
+
+title Fase 4: Pruebas y Control de Calidad
+
+[Pruebas integrales y corrección de errores] as [T15] requires 15 days
+
+[T15] is colored in LightYellow
+
+[Hito: Sistema Estabilizado y Certificado] happens at [T15]'s end
+[Hito: Sistema Estabilizado y Certificado] is colored in Red
+@endgantt

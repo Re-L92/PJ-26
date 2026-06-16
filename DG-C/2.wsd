@@ -1,0 +1,64 @@
+@startuml Caso-02-Clases
+title Registrar Deuda
+
+skinparam class {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor #444444
+  FontName Helvetica
+}
+skinparam classFontStyle bold
+skinparam stereotypeCBackgroundColor #DDDDDD
+
+class Usuario {
+  -id_usuario : int
+  -nombre : String
+  -contraseña_hash : String
+  +autenticar()
+}
+
+class Dueña {
+  +registrarDeuda()
+}
+
+class Ayudante {
+  +registrarDeuda()
+}
+
+class Cliente {
+  -id_cliente : int
+  -nombre : String
+  -saldo_deudor : double
+  -limite_credito: double
+  +buscar() : Cliente
+}
+
+class Producto {
+  -id_producto : int
+  -nombre : String
+  -precio : double
+  +buscar() : Producto
+}
+
+class Deuda {
+  -id_deuda : int
+  -total : double
+  -fecha : DateTime
+  +calcularTotal() : double
+  +registrar() : void
+}
+
+class DetalleDeuda {
+  -cantidad : int
+  -precio_unitario : double
+  +getSubtotal() : double
+}
+
+Usuario  <|-- Dueña
+Usuario  <|-- Ayudante
+Usuario  "1" --> "0..*" Deuda       : registra >
+Cliente  "1" *-- "0..*" Deuda       : acumula >
+Deuda    "1" *-- "1..*" DetalleDeuda : contiene >
+Producto "1" --> "0..*" DetalleDeuda : aparece en >
+
+@enduml

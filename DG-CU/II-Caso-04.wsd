@@ -1,0 +1,26 @@
+@startuml Caso-04
+title Consulta Rápida de Saldo
+left to right direction
+
+:Usuario:              as U
+:Dueña de la Pulpería: as Dueña
+:Ayudante Autorizado:  as Ayudante
+
+Dueña    --|> U
+Ayudante --|> U
+
+rectangle "Sistema de control de Creditos" {
+
+    (Buscar Cliente)               as BC
+    (Consulta Rápida de Saldo)     as CRS
+    (Filtrar Lista en Tiempo Real) as FL
+    (Mostrar Sin Coincidencias)    as MSC
+
+    CRS ..> BC  : <<include>>
+    CRS ..> FL  : <<include>>
+    MSC ..> CRS : <<extend>>
+}
+
+U --> CRS
+
+@enduml

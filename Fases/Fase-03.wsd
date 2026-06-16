@@ -1,0 +1,35 @@
+@startgantt Fase 03
+printscale daily
+saturday are closed
+sunday are closed
+Project starts 2026-06-16
+
+title Fase 3: Desarrollo del Núcleo Funcional
+
+[Diseñar y construir formulario de login] as [T6] requires 5 days
+then [Definir y aplicar permisos por rol: Dueña y Ayudante] as [T7] requires 5 days
+[Diseñar formulario de registro de nuevo cliente] as [T8] requires 6 days
+then [Implementar lógica de guardado y validación de cliente duplicado] as [T9] requires 7 days
+then [Implementar edición de datos del cliente] as [T10] requires 5 days
+[Desarrollar barra de búsqueda] as [T11] starts at 2026-06-29
+[T11] requires 5 days
+
+[Diseñar e implementar formulario de registro de nueva deuda y abono] as [T12] starts at 2026-06-29
+[T12] requires 12 days
+then [Implementar alerta cuando el abono supera la deuda actual] as [T13] requires 6 days
+[Implementar validación de límite de crédito por cliente] as [T14] starts at 2026-07-15
+[T14] requires 7 days
+
+[T6] is colored in LightGreen
+[T7] is colored in LightGreen
+[T8] is colored in LightGreen
+[T9] is colored in LightGreen
+[T10] is colored in LightGreen
+[T11] is colored in LightGreen
+[T12] is colored in LightGreen
+[T13] is colored in LightGreen
+[T14] is colored in LightGreen
+
+[Hito: Lógica de Negocio y Backend Finalizados] happens at [T14]'s end
+[Hito: Lógica de Negocio y Backend Finalizados] is colored in Red
+@endgantt

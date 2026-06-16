@@ -1,0 +1,78 @@
+@startuml Sec-02
+title Registrar Deuda
+
+autonumber "<b>[00]</b>"
+
+actor "Usuario" as U
+boundary "InterfazDeuda" as ID
+control "ControladorDeuda" as CD
+database "BaseDatos" as BD
+
+U -> ID: abrirModuloDeuda()
+activate ID
+ID -> CD: autenticar()
+activate CD
+CD --> ID: sesionActiva
+deactivate CD
+deactivate ID
+
+U -> ID: buscarCliente(nombre)
+activate ID
+ID -> CD: buscarCliente(nombre)
+activate CD
+CD -> BD: buscarCliente(nombre)
+activate BD
+BD --> CD: datosCliente
+deactivate BD
+CD --> ID: datosCliente
+deactivate CD
+ID --> U: mostrarCliente(datosCliente)
+deactivate ID
+
+loop para cada producto seleccionado
+  U -> ID: seleccionarProducto(idProducto, cantidad)
+  activate ID
+  ID -> CD: agregarProducto(idProducto, cantidad)
+  activate CD
+  CD -> BD: buscarProducto(idProducto)
+  activate BD
+  BD --> CD: datosProducto
+  deactivate BD
+  CD --> ID: productoAgregado
+  deactivate CD
+  ID --> U: mostrarResumenParcial()
+  deactivate ID
+end
+
+U -> ID: confirmarDeuda()
+activate ID
+ID -> CD: registrarDeuda(idCliente, productos)
+activate CD
+
+CD -> BD: Deuda(idCliente, idUsuario)
+activate BD
+
+loop para cada producto en la lista
+
+  CD -> BD: DetalleDeuda(idProducto, cantidad, precioUnitario)
+  
+  CD -> BD: agregarDetalle
+  deactivate BD
+end
+
+CD -> BD: calcularTotal()
+activate BD
+BD --> CD: total
+deactivate BD
+
+CD --> ID: deudaRegistrada
+deactivate CD
+ID --> U: mostrarComprobante(total)
+deactivate ID
+
+note right of CD
+  Si el cliente no existe, se redirige
+  a Gestionar Deudores.
+end note
+
+@enduml

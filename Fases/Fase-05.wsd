@@ -1,0 +1,22 @@
+@startgantt Fase 05
+printscale daily
+saturday are closed
+sunday are closed
+Project starts 2026-09-28
+
+title Fase 5: Despliegue, Documentación y Cierre
+
+[Instalar y configurar el sistema en el equipo del cliente] as [T16] requires 4 days
+then [Redactar guía de usuario en formato PDF] as [T17] requires 8 days
+[Redactar documentación técnica del sistema] as [T18] starts at 2026-10-02 
+[T18] requires 9 days
+then [Realizar capacitación presencial a la propietaria y al ayudante] as [T19] requires 3 days
+
+[T16] is colored in LightSalmon
+[T17] is colored in LightSalmon
+[T18] is colored in LightSalmon
+[T19] is colored in LightSalmon
+
+[Hito: Sistema en Producción y Proyecto Concluido] happens at [T19]'s end
+[Hito: Sistema en Producción y Proyecto Concluido] is colored in Red
+@endgantt

@@ -1,0 +1,48 @@
+@startuml Sec-01
+title Gestionar Deudores – Flujo básico
+
+autonumber "<b>[00]</b>"
+
+actor "Dueña" as D
+boundary "InterfazCliente" as IC
+control "ControladorCliente" as CC
+database "BaseDatos" as BD
+
+D -> IC: abrirModuloClientes()
+activate IC
+IC -> CC: solicitarFormulario()
+activate CC
+CC --> IC: formularioListo
+deactivate CC
+IC --> D: mostrarFormulario()
+
+D -> IC: ingresarDatosCliente(nombre, telefono)
+IC -> CC: registrarCliente(nombre, telefono)
+activate CC
+
+CC -> BD: validarNombreDuplicado(nombre)
+activate BD
+BD --> CC: nombreDisponible
+deactivate BD
+
+CC -> BD: CrearCliente(nombre, telefono)
+activate BD
+BD --> CC: ClienteCreado
+deactivate BD
+
+CC -> BD: guardarCliente(nuevoCliente)
+activate BD
+BD --> CC: clienteGuardado
+deactivate BD
+
+CC --> IC: clienteRegistrado
+deactivate CC
+IC --> D: mostrarConfirmacion()
+deactivate IC
+
+note right of CC
+  El flujo alternativo "Editar Cliente"
+  se modela en diagrama separado.
+end note
+
+@enduml

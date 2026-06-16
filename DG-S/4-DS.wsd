@@ -1,0 +1,53 @@
+@startuml Sec-04
+title Consulta Rápida de Saldo
+
+autonumber "<b>[00]</b>"
+
+actor "Usuario" as U
+boundary "InterfazConsulta" as ICO
+control "ControladorConsulta" as CC
+entity "clienteSeleccionado: Cliente" as CLI
+database "BaseDatos" as BD
+
+U -> ICO: ingresarNombreBusqueda(filtro)
+activate ICO
+
+loop mientras el usuario escribe
+  ICO -> CC: filtrarClientes(filtro)
+  activate CC
+ 
+  CC -> BD: buscarPorNombre(filtro)
+  activate BD
+  BD --> CC: listaResultados
+  deactivate BD
+
+  alt hay coincidencias
+    CC --> ICO: listaClientes
+    ICO --> U: mostrarResultados(listaClientes)
+  else sin coincidencias
+    CC --> ICO: listaVacia
+    ICO --> U: mostrarMensajeSinResultados()
+  end
+  deactivate CC
+end
+
+U -> ICO: seleccionarCliente(idCliente)
+ICO -> CC: obtenerSaldo(idCliente)
+activate CC
+
+CC -> BD: buscarCliente(idCliente)
+activate BD
+BD --> CC: datosCliente
+deactivate BD
+
+CC -> CLI: getSaldoDeudor()
+activate CLI
+CLI --> CC: saldoDeudor
+deactivate CLI
+
+CC --> ICO: saldoDeudor
+deactivate CC
+ICO --> U: mostrarSaldo(saldoDeudor)
+deactivate ICO
+
+@enduml

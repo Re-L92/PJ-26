@@ -1,0 +1,38 @@
+@startuml Diagrama Estado Deuda
+
+skinparam state {
+  BackgroundColor #E8F8F5
+  StartColor Teal
+  EndColor DarkSlateGray
+  BorderColor CadetBlue
+}
+
+title Estados de una Deuda
+
+[*] --> EnCreacion : crear()
+
+EnCreacion : - total = 0
+EnCreacion : - Pendiente de detalles
+
+EnCreacion --> Registrada : calcularTotal()\n[detalles.count > 0]\n/ fijarTotal()
+
+Registrada : - Total calculado y fijado
+Registrada : - Inmutable
+
+Registrada --> [*]
+
+note right of EnCreacion
+  La deuda permanece en este
+  estado mientras el usuario
+  selecciona productos en
+  el loop.
+end note
+
+note left of Registrada
+  El total fijado aquí es
+  el que se suma al saldo
+  del cliente mediante
+  incrementarSaldo().
+end note
+
+@enduml

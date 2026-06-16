@@ -1,0 +1,17 @@
+@startgantt Fase 02
+printscale daily
+saturday are closed
+sunday are closed
+Project starts 2026-05-27
+
+title Fase 2: Configuración de Entorno y Base de Datos
+
+[Crear proyecto en Visual Studio (C# / Windows Forms)] as [T4] requires 3 days
+[Crear y configurar base de datos SQL Server con tablas] as [T5] requires 11 days
+
+[T4] is colored in LightCyan
+[T5] is colored in LightCyan
+
+[Hito: Arquitectura y Base de Datos Operativa] happens at [T5]'s end
+[Hito: Arquitectura y Base de Datos Operativa] is colored in Red
+@endgantt

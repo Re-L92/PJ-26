@@ -1,0 +1,26 @@
+@startuml Caso-03
+title Registrar Abono
+left to right direction
+
+:Usuario:               as U
+:Dueña de la Pulpería:  as Dueña
+:Ayudante Autorizado:   as Ayudante
+
+Dueña    --|> U
+Ayudante --|> U
+
+rectangle "Sistema de control de Creditos" {
+
+    (Localizar Cliente)            as LC
+    (Registrar Abono)              as RA
+    (Generar Comprobante de Saldo) as GC
+    (Confirmar Abono Excedente)    as CAE
+
+    RA  ..> LC  : <<include>>
+    RA  ..> GC  : <<include>>
+    CAE ..> RA  : <<extend>>
+}
+
+U --> RA
+
+@enduml
