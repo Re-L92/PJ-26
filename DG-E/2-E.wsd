@@ -12,31 +12,31 @@ title Estados de un Cliente
 [*] --> SinDeuda : crear()
 
 SinDeuda : - saldo_deudor = 0
-SinDeuda : - No requiere seguimiento
+SinDeuda : - limite_credito definido
+SinDeuda : ==
+SinDeuda : incrementarSaldo(monto) [monto > limite] / rechazar
 
-SinDeuda --> ConDeuda : incrementarSaldo(monto)\n[monto > 0]\n/ sumarSaldo
+SinDeuda --> ConDeuda : incrementarSaldo(monto)\n[monto <= limite]\n/ sumarSaldo
 
 ConDeuda : - saldo_deudor > 0
-ConDeuda : - Habilitado para recibir abonos
+ConDeuda : ==
+ConDeuda : incrementarSaldo(monto) [saldo + monto <= limite] / sumarSaldo
+ConDeuda : incrementarSaldo(monto) [saldo + monto > limite] / rechazar
 
 state EvaluarAbono <<choice>>
 
 ConDeuda --> EvaluarAbono : decrementarSaldo(monto)
 
-EvaluarAbono --> ConDeuda : [monto < saldo_deudor]\n/ restarSaldo(monto)
-EvaluarAbono --> SinDeuda : [monto >= saldo_deudor]\n/ saldo_deudor = 0
+EvaluarAbono --> ConDeuda : [monto < saldo_deudor] / restarSaldo
+EvaluarAbono --> ConDeuda : [monto > saldo_deudor] / rechazar
+EvaluarAbono --> SinDeuda : [monto == saldo_deudor] / saldo_deudor = 0
 
-note left of SinDeuda
-  Estado inicial por defecto
-  cuando un cliente es
-  creado en el sistema.
-end note
-
-note right of EvaluarAbono
-  Si el monto excede la deuda,
-  el Controlador pide confirmación
-  antes de llevar el saldo
-  a cero.
+note right of ConDeuda
+  Las validaciones para 
+  incrementar o rechazar 
+  nuevas deudas ocurren
+  internamente sin cambiar 
+  de estado.
 end note
 
 @enduml
